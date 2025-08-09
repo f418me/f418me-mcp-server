@@ -12,6 +12,9 @@ export function registerSendSmsTool(server: PaidMcpServer) {
     }
   }
 
+  // Get SMS cost from environment variable, default to 79 sats
+  const SMS_COST_SATS = parseInt(process.env.SMS_COST_SATS || "79");
+
   // Initialize Twilio client
   const client = twilio(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
 
@@ -19,9 +22,9 @@ export function registerSendSmsTool(server: PaidMcpServer) {
     "send_sms",
     {
       title: "Send SMS",
-      description: "Send an SMS message for 25 sats",
+      description: `Send an SMS message for ${SMS_COST_SATS} sats`,
       inputSchema: {
-        to: z.string().describe("Recipient phone number in E.164 format (e.g., +11234567890)"),
+        to: z.string().describe("Recipient phone number (e.g., +11234567890 or +41 79 675 46 90)"),
         message: z.string().describe("Message content to send")
       },
       outputSchema: {
@@ -30,28 +33,31 @@ export function registerSendSmsTool(server: PaidMcpServer) {
     },
     (params) =>
       Promise.resolve({
-        satoshi: 25,
+        satoshi: SMS_COST_SATS,
         description: "An SMS to be sent",
       }),
     async (params) => {
       const { to, message } = params;
       try {
-        // Validate phone number format
+        // Validate and normalize phone number format
         if (!to.startsWith("+")) {
           return {
             content: [{
               type: "text",
-              text: "Error: Phone number must be in E.164 format (e.g., +11234567890)"
+              text: "Error: Phone number must start with + (e.g., +11234567890 or +41 79 675 46 90)"
             }],
             isError: true
           };
         }
 
+        // Convert phone number to E.164 format by removing spaces and other formatting
+        const normalizedTo = to.replace(/\s+/g, "").replace(/[^\+\d]/g, "");
+
         // Send message via Twilio
         const response = await client.messages.create({
           body: message,
           from: process.env.FROM_NUMBER,
-          to: to
+          to: normalizedTo
         });
 
         const result = {

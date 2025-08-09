@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for boilerplate-paid-mcp on 2025-06-26T17:33:57+07:00
+# fly.toml app configuration file generated for f418me-mcp-server on 2025-08-09T08:01:19+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -17,6 +17,7 @@ primary_region = 'fra'
   processes = ['app']
 
 [[vm]]
-  memory = '256mb'
-  cpu_kind = 'shared'
-  cpus = 1
+  size = 'shared-cpu-1x'
+
+[env]
+  SMS_COST_SATS = "79"

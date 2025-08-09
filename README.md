@@ -27,14 +27,12 @@ To use the SMS tool, you need a Twilio account.
 1.  Copy the `.env.example` file to `.env`.
 2.  Add your Twilio credentials to the `.env` file:
     ```
-    TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    TWILIO_AUTH_TOKEN=your_auth_token
-    TWILIO_FROM_NUMBER=+15017122661
+    ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    AUTH_TOKEN=your_auth_token
+    FROM_NUMBER=+15017122661
+    SMS_COST_SATS=25
     ```
 
-### Get Compliment Tool
-
-This tool returns a random compliment. It is a free tool.
 
 ## Getting Started
 
