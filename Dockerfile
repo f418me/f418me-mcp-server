@@ -33,7 +33,7 @@ RUN yarn install --production
 COPY --from=builder /usr/src/app/build ./build
 
 # The application listens on port 3000 by default for HTTP mode
-EXPOSE 3000
+EXPOSE 3001
 
 # Environment variables that are needed at runtime
 ENV NODE_ENV=production

@@ -32,11 +32,9 @@ To use the SMS tool, you need a Twilio account.
     TWILIO_FROM_NUMBER=+15017122661
     ```
 
-### Other Tools
+### Get Compliment Tool
 
-- `get_weather`: A paid tool to fetch the weather for a given city.
-- `get_food_delivery_menu`: A free tool that returns a menu of food items.
-- `order_food_delivery`: A paid tool to order items from the food delivery menu.
+This tool returns a random compliment. It is a free tool.
 
 ## Getting Started
 
