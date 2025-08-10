@@ -12,29 +12,28 @@ This server is built upon the following foundational projects from Alby:
 
 ## Tools
 
-This MCP server includes several tools:
+This MCP server includes currently the following tool:
 
 ### Paid SMS Tool
 
-This tool allows the AI agent to send SMS messages via Twilio. It is a paid tool, and the cost of sending an SMS is covered by a Lightning payment.
+The sms tool allows the AI agent to send SMS messages via Twilio. It is a paid tool, and the cost of sending an SMS is covered by a Lightning payment.
 
 - **Source:** The implementation is based on [YiyangLi/sms-mcp-server](https://github.com/YiyangLi/sms-mcp-server).
 
-#### SMS Tool Setup
+## Connecting to the f418.me MCP Server
 
-To use the SMS tool, you need a Twilio account.
+If your agent supports remote MCP servers - HTTP Streamable transports or SSE (e.g. N8N, Goose, Claude), you can connect to f418me's MCP server:
 
-1.  Copy the `.env.example` file to `.env`.
-2.  Add your Twilio credentials to the `.env` file:
-    ```
-    ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    AUTH_TOKEN=your_auth_token
-    FROM_NUMBER=+15017122661
-    SMS_COST_SATS=25
-    ```
+- HTTP Streamable: `https://f418me-mcp-server.fly.dev/mcp`
+- SSE (Deprecated): `https://f418me-mcp-server.fly.dev/sse`
+
+That server is hosted on Fly.io and is available for public use. It supports the Model Context Protocol and allows AI agents to interact with paid tools.
+
+> You need to install the [Alby MCP server](https://github.com/getAlby/mcp) to handle the payment requests automatically. The Alby MCP server will handle the Nostr Wallet Connect (NWC) connection and payment processing.
 
 
-## Getting Started
+## Getting Started locally
+This section provides instructions for setting up the f418.me MCP server locally for development and testing.
 
 ### Prerequisites
 
@@ -52,27 +51,16 @@ To use the SMS tool, you need a Twilio account.
 
     ```
     NWC_CONNECTION_STRING="nostr+walletconnect://..."
+    ACCOUNT_SID=
+    AUTH_TOKEN=
+    FROM_NUMBER=
+    SMS_COST_SATS=79
     ```
 3.  Build the server:
     ```bash
     yarn build
     ```
 
-## Deployment with Goose
-
-You can deploy this server using Goose.
-
-1.  **Login to Goose:**
-    ```bash
-    goose login
-    ```
-2.  **Launch the app:**
-    ```bash
-    goose launch
-    ```
-This will deploy the MCP server. You will be prompted to set secrets like `NWC_CONNECTION_STRING` during the deployment process.
-
-## Local Development
 
 ### Configure in your AI environment
 
@@ -92,18 +80,3 @@ To use this server locally with your AI agent, you need to add it to your MCP se
   }
 }
 ```
-
-> It is also recommended to install the [Alby MCP server](https://github.com/getAlby/mcp) to handle the payment requests.
-
-### Inspect the tools
-
-You can test the tools without an LLM by running:
-
-```bash
-yarn inspect
-```
-
-## Troubleshooting
-
-- **Model Usage:** Ensure you are using a capable model (e.g., Claude 3.5 Sonnet, Gemini 1.5, or GPT-4) for the MCP server to function correctly.
-- **Contact Alby Support:** For issues related to Lightning payments or NWC, visit [support.getalby.com](https://support.getalby.com).
