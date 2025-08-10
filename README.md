@@ -33,6 +33,30 @@ To use the SMS tool, you need a Twilio account.
     SMS_COST_SATS=25
     ```
 
+## Error Tracking with Sentry
+
+This server includes optional Sentry integration for error tracking and monitoring in production environments.
+
+### Sentry Setup
+
+1. Create a Sentry account at [sentry.io](https://sentry.io)
+2. Create a new project for your MCP server
+3. Copy your DSN from the project settings
+4. Add the Sentry DSN to your `.env` file:
+   ```
+   SENTRY_DSN=https://your-sentry-dsn-here@sentry.io/project-id
+   ```
+
+### Sentry Features
+
+- **Automatic Error Capture:** All unhandled exceptions and promise rejections are automatically captured
+- **SMS Tool Monitoring:** Failed SMS sends are tracked with context (partial phone number and message length for privacy)
+- **Server Monitoring:** HTTP server errors and MCP server initialization failures are tracked
+- **Performance Monitoring:** Optional performance profiling with 100% sample rate in development
+- **Environment-aware:** Automatically detects development vs production environments
+
+If no `SENTRY_DSN` is provided, the server will run normally without error tracking.
+
 
 ## Getting Started
 

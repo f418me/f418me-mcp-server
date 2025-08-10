@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { PaidMcpServer } from "@getalby/paidmcp";
 import twilio from "twilio";
+import { Sentry } from "../sentry.js";
 
 export function registerSendSmsTool(server: PaidMcpServer) {
   // Environment variables validation
@@ -75,6 +76,17 @@ export function registerSendSmsTool(server: PaidMcpServer) {
         };
       } catch (error) {
         console.error("Error sending message:", error);
+        
+        // Capture error in Sentry with additional context
+        Sentry.withScope((scope) => {
+          scope.setTag("operation", "send_sms");
+          scope.setContext("sms_params", {
+            to: to ? to.substring(0, 5) + "***" : "unknown", // Partial phone number for privacy
+            messageLength: message ? message.length : 0,
+          });
+          Sentry.captureException(error);
+        });
+
         return {
           content: [{
             type: "text",

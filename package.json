@@ -32,6 +32,8 @@
   "dependencies": {
     "@getalby/paidmcp": "^1.0.3",
     "@modelcontextprotocol/sdk": "^1.13.0",
+    "@sentry/node": "^10.3.0",
+    "@sentry/profiling-node": "^10.3.0",
     "@types/node": "^20.11.5",
     "dotenv": "^17.1.0",
     "express": "^5.1.0",
