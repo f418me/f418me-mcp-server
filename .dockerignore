@@ -3,6 +3,7 @@
 build
 node_modules
 .idea
+.vscode
 
 
 # flyctl launch added from .idea/.gitignore

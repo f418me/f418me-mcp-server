@@ -1,45 +1,49 @@
-# f418.me Paid MCP Server
+# f418.me MCP Server
 
-This is a [Model Context Protocol (MCP)](https://github.com/modelcontextprotocol/mcp) server that enables AI agents to interact with paid tools and services using Bitcoin Lightning payments.
+A [Model Context Protocol (MCP)](https://github.com/modelcontextprotocol/mcp) server that enables AI agents to interact with paid tools and services using Bitcoin Lightning payments.
 
-## Core Technology
+## Overview
 
-This server is built upon the following foundational projects from Alby:
+This server bridges AI agents with paid services through Bitcoin Lightning micropayments, allowing secure and instant payment processing for various tools and APIs.
 
-- **[Alby Bitcoin Payments MCP Server (getAlby/mcp)](https://github.com/getAlby/mcp):** This is the core component that connects a Bitcoin Lightning wallet to a Large Language Model (LLM) using Nostr Wallet Connect (NWC). It allows the AI agent to send and receive Lightning payments.
+## Built On
 
-- **[PaidMCP Boilerplate (getAlby/paidmcp-boilerplate)](https://github.com/getAlby/paidmcp-boilerplate):** This serves as the basis for the paid tools integrated into this server. It provides a template for creating tools that require a payment to be used.
+This server leverages proven Bitcoin Lightning infrastructure:
 
-## Tools
+- **[Alby Bitcoin Payments MCP Server](https://github.com/getAlby/mcp)** - Core Lightning wallet integration via Nostr Wallet Connect (NWC)
+- **[PaidMCP Boilerplate](https://github.com/getAlby/paidmcp-boilerplate)** - Template for creating payment-enabled tools
 
-This MCP server includes currently the following tool:
+## Available Tools
 
-### Paid SMS Tool
+### SMS Tool (Paid)
 
-The sms tool allows the AI agent to send SMS messages via Twilio. It is a paid tool, and the cost of sending an SMS is covered by a Lightning payment.
+Send SMS messages via Twilio with Lightning payment integration.
 
-- **Source:** The implementation is based on [YiyangLi/sms-mcp-server](https://github.com/YiyangLi/sms-mcp-server).
+- **Cost:** Configurable (default: 79 sats)
+- **Provider:** Twilio
+- **Source:** Based on [YiyangLi/sms-mcp-server](https://github.com/YiyangLi/sms-mcp-server)
 
 ## Connecting to the f418.me MCP Server
 
-If your agent supports remote MCP servers - HTTP Streamable transports or SSE (e.g. N8N, Goose, Claude), you can connect to f418me's MCP server:
+If your agent supports remote MCP servers - HTTP Streamable transports or SSE (e.g., N8N, Goose, Claude), you can connect to f418.me's MCP server:
 
 - HTTP Streamable: `https://f418me-mcp-server.fly.dev/mcp`
 - SSE (Deprecated): `https://f418me-mcp-server.fly.dev/sse`
 
-That server is hosted on Fly.io and is available for public use. It supports the Model Context Protocol and allows AI agents to interact with paid tools.
+The server is hosted on Fly.io and available for public use. It supports the Model Context Protocol and enables AI agents to interact with paid tools.
 
 > You need to install the [Alby MCP server](https://github.com/getAlby/mcp) to handle the payment requests automatically. The Alby MCP server will handle the Nostr Wallet Connect (NWC) connection and payment processing.
 
 
-## Getting Started locally
+## Getting Started Locally
+
 This section provides instructions for setting up the f418.me MCP server locally for development and testing.
 
 ### Prerequisites
 
 - Node.js 20+
 - Yarn
-- A connection string from a lightning wallet that supports NWC (e.g., from [Alby Hub](https://albyhub.com)).
+- A connection string from a Lightning wallet that supports NWC (e.g., from [Alby Hub](https://albyhub.com))
 
 ### Installation
 
@@ -47,9 +51,9 @@ This section provides instructions for setting up the f418.me MCP server locally
     ```bash
     yarn install
     ```
-2.  Set up your environment variables by copying `.env.example` to `.env` and adding your NWC connection string and any other required secrets (like Twilio credentials).
+2.  Set up your environment variables by copying `.env.example` to `.env` and adding your NWC connection string and any other required secrets (like Twilio credentials):
 
-    ```
+    ```env
     NWC_CONNECTION_STRING="nostr+walletconnect://..."
     ACCOUNT_SID=
     AUTH_TOKEN=
@@ -62,7 +66,7 @@ This section provides instructions for setting up the f418.me MCP server locally
     ```
 
 
-### Configure in your AI environment
+### Configure in Your AI Environment
 
 To use this server locally with your AI agent, you need to add it to your MCP server list. For example, in your `mcp_config.json`:
 
@@ -81,11 +85,11 @@ To use this server locally with your AI agent, you need to add it to your MCP se
 }
 ```
 
-### Example configuration with Alby NWC and the public f418.me server
+## Using Kiro with Alby NWC and the Public f418.me Server
 
-If your agent supports multiple MCP servers, you can combine the Alby NWC
-server for handling Lightning payments, the public f418.me server, and an
-optional in-memory tool server. A minimal `mcp_config.json` could look like:
+To use the f418.me MCP server with Alby NWC and the public f418.me server, you need to configure your AI agent to connect to these services. [Kiro](https://kiro.dev) provides a convenient way to set up these connections using the `mcp_config.json` file.
+
+Here we set up the Alby NWC server for handling Lightning payments, the public f418.me server, and an optional memory tool server:
 
 ```json
 {
@@ -115,5 +119,22 @@ optional in-memory tool server. A minimal `mcp_config.json` could look like:
 }
 ```
 
-Replace the `NWC_CONNECTION_STRING` value with your own Lightning wallet
-connection string.
+Replace the `NWC_CONNECTION_STRING` value with your own Lightning wallet connection string.
+
+## Requirements
+
+- Node.js 20+
+- Lightning wallet with NWC support (e.g., [Alby Hub](https://albyhub.com))
+- Twilio account (for SMS functionality)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For issues and questions, please use the [GitHub Issues](https://github.com/f418me/f418me-mcp-server/issues) page.
