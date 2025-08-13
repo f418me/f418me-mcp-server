@@ -87,7 +87,7 @@ To use this server locally with your AI agent, you need to add it to your MCP se
 
 ## Using Kiro with Alby NWC and the Public f418.me Server
 
-To use the f418.me MCP server with Alby NWC and the public f418.me server, you need to configure your AI agent to connect to these services. [Kiro](https://kiro.dev) provides a convenient way to set up these connections using the `mcp_config.json` file.
+To use the f418.me MCP server with Alby NWC and the public f418.me server, you need to configure your AI agent to connect to these services. [Kiro](https://kiro.dev) provides a convenient way to set up these connections using the `mcp.json` file.
 
 Here we set up the Alby NWC server for handling Lightning payments, the public f418.me server, and an optional memory tool server:
 
