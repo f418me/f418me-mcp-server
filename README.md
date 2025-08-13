@@ -80,3 +80,40 @@ To use this server locally with your AI agent, you need to add it to your MCP se
   }
 }
 ```
+
+### Example configuration with Alby NWC and the public f418.me server
+
+If your agent supports multiple MCP servers, you can combine the Alby NWC
+server for handling Lightning payments, the public f418.me server, and an
+optional in-memory tool server. A minimal `mcp_config.json` could look like:
+
+```json
+{
+  "mcpServers": {
+    "nwc": {
+      "command": "npx",
+      "args": ["-y", "@getalby/mcp"],
+      "env": {
+        "NWC_CONNECTION_STRING": "nostr+walletconnect://..."
+      }
+    },
+    "f418-remote-mcp": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://f418me-mcp-server.fly.dev/mcp",
+        "--transport",
+        "sse"
+      ],
+      "disabled": false
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
+    }
+  }
+}
+```
+
+Replace the `NWC_CONNECTION_STRING` value with your own Lightning wallet
+connection string.
